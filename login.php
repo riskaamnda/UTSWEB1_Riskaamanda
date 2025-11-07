@@ -103,10 +103,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h2>POLGAN MART</h2>
 
     <?php 
-    // tampilkan pesan error jika login gagal
-    if (isset($error)) {
-        echo "<div class='error'>$error</div>";
-    }
+    // // tampilkan pesan error jika login gagal
+    // if (isset($error)) {
+    //     echo "<div class='error'>$error</div>";
+    // }
     ?>
 
     <form method="POST" action="">
