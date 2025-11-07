@@ -1,3 +1,25 @@
+<?php
+session_start();
+
+// Jika form dikirim (tombol login ditekan)
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Data login statis
+    $validUser = "admin";
+    $validPass = "1234";
+
+    if ($username == $validUser && $password == $validPass) {
+        $_SESSION['username'] = $username;
+        header("Location: dashboard.php");
+        exit;
+    } else {
+        $error = "Username atau Password salah!";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +48,7 @@
             font-size: 22px;
             letter-spacing: 1px;
         }
-         input {
+        input {
             width: 100%;
             padding: 10px;
             margin-top: 8px;
@@ -53,7 +75,7 @@
             background: #dddddd;
             color: black;
             padding: 10px;
-             width: 100%;
+            width: 100%;
             border: none;
             border-radius: 6px;
             margin-top: 8px;
@@ -80,7 +102,7 @@
 <div class="login-container">
     <h2>POLGAN MART</h2>
 
-     <?php 
+    <?php 
     // tampilkan pesan error jika login gagal
     if (isset($error)) {
         echo "<div class='error'>$error</div>";
