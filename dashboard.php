@@ -29,11 +29,23 @@ $jumlah = [];     // menyimpan jumlah pembelian
 $total = [];      // menyimpan total per barang
 $grandtotal = 0;  // total keseluruhan pembelian
 
-for ($i = 0; $i < count($produk); $i++) {
-    $beli[$i] = $produk[$i]['nama'];            // simpan nama barang
-    $jumlah[$i] = rand(1, 5);                   // jumlah acak antara 1–5
-    $total[$i] = $produk[$i]['harga'] * $jumlah[$i]; // hitung total
-    $grandtotal += $total[$i];                  // akumulasi total
+// Commit 7 – Dashboard Penjualan (Perhitungan Total)
+$pembelian = []; // array untuk menampung hasil pembelian
+$grandtotal = 0;
+
+foreach ($produk as $item) {
+    $jumlah = rand(1, 5); // jumlah acak per item
+    $total = $item['harga'] * $jumlah;
+    $grandtotal += $total; // akumulasi total semua item
+
+    // simpan detail pembelian ke array
+    $pembelian[] = [
+        'kode' => $item['kode'],
+        'nama' => $item['nama'],
+        'harga' => $item['harga'],
+        'jumlah' => $jumlah,
+        'total' => $total
+    ];
 }
 ?>
 
@@ -118,15 +130,15 @@ for ($i = 0; $i < count($produk); $i++) {
             <th>Jumlah</th>
             <th>Total</th>
         </tr>
-        <?php for ($i = 0; $i < count($produk); $i++): ?>
+        <?php foreach ($pembelian as $item): ?>
     <tr>
-        <td><?= $produk[$i]['kode']; ?></td>
-        <td><?= $produk[$i]['nama']; ?></td>
-        <td>Rp <?= number_format($produk[$i]['harga'], 0, ',', '.'); ?></td>
-        <td><?= $jumlah[$i]; ?></td>
-        <td>Rp <?= number_format($total[$i], 0, ',', '.'); ?></td>
+        <td><?= $item['kode']; ?></td>
+        <td><?= $item['nama']; ?></td>
+        <td>Rp <?= number_format($item['harga'], 0, ',', '.'); ?></td>
+        <td><?= $item['jumlah']; ?></td>
+        <td>Rp <?= number_format($item['total'], 0, ',', '.'); ?></td>
     </tr>
-<?php endfor; ?>
+<?php endforeach; ?>
         <tr>
             <td colspan="4" class="total">Total Belanja</td>
             <td><b>Rp <?= number_format($grandtotal, 0, ',', '.'); ?></b></td>
