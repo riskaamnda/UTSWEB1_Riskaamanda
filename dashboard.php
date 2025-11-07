@@ -55,60 +55,64 @@ foreach ($produk as $item) {
     <meta charset="UTF-8">
     <title>Dashboard Penjualan - POLGAN MART</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            background: white;
-            max-width: 800px;
-            margin: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            padding: 20px;
-        }
-        h2, h3 {
-            text-align: center;
-            margin: 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            text-align: center;
-            padding: 8px;
-        }
-        th {
-            background-color: #eaeaea;
-        }
-        .total {
-            font-weight: bold;
-            text-align: right;
-            padding-right: 15px;
-        }
-        .logout {
-            text-align: right;
-            margin-bottom: 10px;
-        }
-        .logout a {
-            text-decoration: none;
-            background-color: #dc3545;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 4px;
-        }
-        .logout a:hover {
-            background-color: #c82333;
-        }
-        hr {
-            margin-top: 20px;
-        }
-    </style>
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(to right, #f0f4ff, #ffffff);
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        background: #fff;
+        max-width: 850px;
+        margin: auto;
+        border-radius: 12px;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        padding: 25px 30px;
+    }
+    h2 {
+        color: #007bff;
+        margin-bottom: 5px;
+    }
+    h3 {
+        color: #333;
+        font-weight: normal;
+        margin-top: 0;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+    th {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+    }
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+    .total {
+        font-weight: bold;
+        text-align: right;
+        background-color: #f8f9fa;
+        padding-right: 15px;
+    }
+    .btn-cetak {
+        display: inline-block;
+        background-color: #28a745;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        margin-top: 15px;
+        float: right;
+    }
+    .btn-cetak:hover {
+        background-color: #218838;
+    }
+</style>
 </head>
 <body>
 <div class="container">
