@@ -20,24 +20,20 @@ for ($i = 0; $i < count($kode_barang); $i++) {
     ];
 }
 
-// Commit 6 – Acak barang dan jumlah
+// Commit 6 – Dashboard Penjualan (Logika Penjualan Random)
 shuffle($produk); // urutan barang diacak
-$grandtotal = 0;
-$pembelian = [];
 
-// Buat pembelian acak
+// 🔽 Tambahan baru sesuai instruksi
+$beli = [];       // menyimpan nama barang yang dibeli
+$jumlah = [];     // menyimpan jumlah pembelian
+$total = [];      // menyimpan total per barang
+$grandtotal = 0;  // total keseluruhan pembelian
+
 for ($i = 0; $i < count($produk); $i++) {
-    $jumlah = rand(1, 5); // jumlah random 1–5
-    $total = $produk[$i]['harga'] * $jumlah;
-    $grandtotal += $total;
-
-    $pembelian[] = [
-        'kode' => $produk[$i]['kode'],
-        'nama' => $produk[$i]['nama'],
-        'harga' => $produk[$i]['harga'],
-        'jumlah' => $jumlah,
-        'total' => $total
-    ];
+    $beli[$i] = $produk[$i]['nama'];            // simpan nama barang
+    $jumlah[$i] = rand(1, 5);                   // jumlah acak antara 1–5
+    $total[$i] = $produk[$i]['harga'] * $jumlah[$i]; // hitung total
+    $grandtotal += $total[$i];                  // akumulasi total
 }
 ?>
 
@@ -122,15 +118,15 @@ for ($i = 0; $i < count($produk); $i++) {
             <th>Jumlah</th>
             <th>Total</th>
         </tr>
-        <?php foreach ($pembelian as $item): ?>
-            <tr>
-                <td><?= $item['kode']; ?></td>
-                <td><?= $item['nama']; ?></td>
-                <td>Rp <?= number_format($item['harga'], 0, ',', '.'); ?></td>
-                <td><?= $item['jumlah']; ?></td>
-                <td>Rp <?= number_format($item['total'], 0, ',', '.'); ?></td>
-            </tr>
-        <?php endforeach; ?>
+        <?php for ($i = 0; $i < count($produk); $i++): ?>
+    <tr>
+        <td><?= $produk[$i]['kode']; ?></td>
+        <td><?= $produk[$i]['nama']; ?></td>
+        <td>Rp <?= number_format($produk[$i]['harga'], 0, ',', '.'); ?></td>
+        <td><?= $jumlah[$i]; ?></td>
+        <td>Rp <?= number_format($total[$i], 0, ',', '.'); ?></td>
+    </tr>
+<?php endfor; ?>
         <tr>
             <td colspan="4" class="total">Total Belanja</td>
             <td><b>Rp <?= number_format($grandtotal, 0, ',', '.'); ?></b></td>
