@@ -6,121 +6,129 @@ if (!isset($_SESSION['username'])) {
 }
 
 // ===========================
-//  Commit 5 – Data Barang
-//  (Array Multidimensi)
+//  Data Barang (Manual)
 // ===========================
 $produk = [
-    ["kode" => "B001", "nama" => "Mie Lidi Pedas", "harga" => 7000],
-    ["kode" => "B002", "nama" => "Keripik Balado", "harga" => 8000],
-    ["kode" => "B003", "nama" => "Es Kopi Susu", "harga" => 12000],
-    ["kode" => "B004", "nama" => "Jus Mangga", "harga" => 10000],
-    ["kode" => "B005", "nama" => "Roti Coklat", "harga" => 6000]
+    ["kode" => "K001", "nama" => "Teh Pucuk", "harga" => 3000]
 ];
 
-// Commit 6 – Acak urutan barang
-shuffle($produk);
+// Data pembelian (contoh seperti gambar)
+$pembelian = [
+    [
+        "kode"   => "K001",
+        "nama"   => "Teh Pucuk",
+        "harga"  => 3000,
+        "jumlah" => 1,
+        "total"  => 3000
+    ]
+];
 
-// ===========================
-// Commit 7 – Perhitungan Total
-// ===========================
-$pembelian = [];
-$grandtotal = 0;
-
-foreach ($produk as $item) {
-    $jumlah = rand(1, 5);
-    $total = $item['harga'] * $jumlah;
-    $grandtotal += $total;
-
-    $pembelian[] = [
-        'kode' => $item['kode'],
-        'nama' => $item['nama'],
-        'harga' => $item['harga'],
-        'jumlah' => $jumlah,
-        'total' => $total
-    ];
-}
-
+$totalBelanja = 3000;
+$diskon = $totalBelanja * 0.05;
+$totalBayar = $totalBelanja - $diskon;
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard Penjualan - POLGAN MART</title>
-    <style>
-    body {
-        font-family: 'Segoe UI', Arial, sans-serif;
-        background: linear-gradient(to right, #f0f4ff, #ffffff);
-        margin: 0;
-        padding: 20px;
-    }
-    .container {
-        background: #fff;
-        max-width: 850px;
-        margin: auto;
-        border-radius: 12px;
-        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-        padding: 25px 30px;
-    }
-    h2 {
-        color: #007bff;
-        margin-bottom: 5px;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-    }
-    th {
-        background-color: #007bff;
-        color: white;
-        padding: 10px;
-    }
-    td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-    }
-    .total {
-        font-weight: bold;
-        text-align: right;
-        background-color: #f8f9fa;
-    }
-    </style>
+<meta charset="UTF-8">
+<title>Dashboard - POLGAN MART</title>
+
+<!-- GOOGLE FONT + TAILWIND -->
+<script src="https://cdn.tailwindcss.com"></script>
+
 </head>
-<body>
-<div class="container">
-    <h2>-- POLGAN MART --</h2>
-    <h3>Sistem Penjualan Sederhana</h3>
+<body class="bg-gray-100">
 
-    <p>Selamat datang, <b><?= $_SESSION['username']; ?></b> |
-    <a href="logout.php">Logout</a></p>
+<!-- HEADER -->
+<div class="flex justify-between px-10 py-6">
+    <div class="flex gap-3 items-center">
+        <div class="bg-blue-600 text-white p-4 rounded-xl font-bold">PM</div>
+        <div>
+            <h1 class="font-bold text-xl">--POLGAN MART--</h1>
+            <p class="text-sm text-gray-500 -mt-1">Sistem Penjualan Sederhana</p>
+        </div>
+    </div>
 
-    <hr>
-    <h3>Daftar Pembelian</h3>
-    <table>
-        <tr>
-            <th>Kode</th>
-            <th>Nama Barang</th>
-            <th>Harga</th>
-            <th>Jumlah</th>
-            <th>Total</th>
-        </tr>
-
-        <?php foreach ($pembelian as $item): ?>
-        <tr>
-            <td><?= $item['kode']; ?></td>
-            <td><?= $item['nama']; ?></td>
-            <td>Rp <?= number_format($item['harga'], 0, ',', '.'); ?></td>
-            <td><?= $item['jumlah']; ?></td>
-            <td>Rp <?= number_format($item['total'], 0, ',', '.'); ?></td>
-        </tr>
-        <?php endforeach; ?>
-
-        <tr>
-            <td colspan="4" class="total">Total Belanja</td>
-            <td><b>Rp <?= number_format($grandtotal, 0, ',', '.'); ?></b></td>
-        </tr>
-    </table>
+    <div class="text-right">
+        <p>Selamat datang, <b>admin!</b></p>
+        <p class="text-sm text-gray-500 -mt-1">Role: Dosen</p>
+        <a href="logout.php" class="bg-gray-200 px-4 py-1 rounded-lg text-sm">Logout</a>
+    </div>
 </div>
+
+<!-- FORM INPUT -->
+<div class="w-10/12 bg-white mx-auto p-8 rounded-xl shadow">
+
+    <div class="grid grid-cols-1 gap-2">
+        <label class="font-semibold">Kode Barang</label>
+        <input type="text" class="border rounded-lg p-2" placeholder="Masukkan Kode Barang">
+
+        <label class="font-semibold mt-3">Nama Barang</label>
+        <input type="text" class="border rounded-lg p-2" placeholder="Masukkan Nama Barang">
+
+        <label class="font-semibold mt-3">Harga</label>
+        <input type="text" class="border rounded-lg p-2" placeholder="Masukkan Harga">
+
+        <label class="font-semibold mt-3">Jumlah</label>
+        <input type="number" class="border rounded-lg p-2" placeholder="Masukkan Jumlah">
+
+        <div class="mt-4 flex gap-3">
+            <button class="bg-blue-600 text-white px-5 py-2 rounded-lg">Tambahkan</button>
+            <button class="bg-gray-300 px-5 py-2 rounded-lg">Batal</button>
+        </div>
+    </div>
+
+    <!-- TABEL -->
+    <h2 class="text-center font-semibold mt-10 text-lg">Daftar Pembelian</h2>
+
+    <table class="w-full mt-4 text-center border">
+        <thead class="bg-gray-200">
+            <tr>
+                <th class="p-2 border">Kode</th>
+                <th class="p-2 border">Nama Barang</th>
+                <th class="p-2 border">Harga</th>
+                <th class="p-2 border">Jumlah</th>
+                <th class="p-2 border">Total</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td class="border p-2"><?= $pembelian[0]['kode'] ?></td>
+                <td class="border p-2"><?= $pembelian[0]['nama'] ?></td>
+                <td class="border p-2">Rp <?= number_format($pembelian[0]['harga'], 0, ',', '.') ?></td>
+                <td class="border p-2"><?= $pembelian[0]['jumlah'] ?></td>
+                <td class="border p-2">Rp <?= number_format($pembelian[0]['total'], 0, ',', '.') ?></td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-right font-bold p-2">Total Belanja</td>
+                <td class="p-2 font-semibold">Rp <?= number_format($totalBelanja, 0, ',', '.') ?></td>
+            </tr>
+
+            <tr>
+                <td colspan="4" class="text-right font-bold p-2">Diskon</td>
+                <td class="p-2 text-red-600 font-semibold">
+                    Rp <?= number_format($diskon, 0, ',', '.') ?> (5%)
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="4" class="text-right font-bold p-2">Total Bayar</td>
+                <td class="p-2 font-bold text-green-700">
+                    Rp <?= number_format($totalBayar, 0, ',', '.') ?>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <button class="mt-5 bg-red-500 text-white px-5 py-2 rounded-lg">
+        Kosongkan Keranjang
+    </button>
+
+</div>
+
 </body>
 </html>
