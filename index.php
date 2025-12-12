@@ -1,25 +1,38 @@
 <?php
 session_start();
+include "koneksi.php";
 
-// Jika form dikirim (tombol login ditekan)
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+if (isset($_SESSION['username'])) {
+    header("Location: dashboard.php");
+    exit;
+}
 
-    // Data login statis
-    $validUser = "admin";
-    $validPass = "1234";
+if (isset($_POST['x']) && isset($_POST['y'])) {
 
-    if ($username == $validUser && $password == $validPass) {
-        $_SESSION['username'] = $username;
-        header("Location: dashboard.php");
-        exit;
+    $username = $_POST['x'];
+    $password = $_POST['y'];
+
+    $result = mysqli_query($conn, "SELECT * FROM users WHERE username='$username'");
+
+    if ($row = mysqli_fetch_assoc($result)) {
+
+        if ($password == $row['password']) {
+
+            $_SESSION['username'] = $row['username'];
+            $_SESSION['nama'] = $row['nama_lengkap'];
+            $_SESSION['role'] = $row['role'];
+
+            header("Location: dashboard.php");
+            exit;
+
+        } else {
+            $error = "Password salah!";
+        }
     } else {
-        $error = "Username atau Password salah!";
+        $error = "Username tidak ditemukan!";
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,10 +124,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <form method="POST" action="">
         <label style="float:left; font-size:14px;">Username</label>
-        <input type="text" name="username" required>
+        <input type="text" name="x" required>
 
         <label style="float:left; margin-top:10px; font-size:14px;">Password</label>
-        <input type="password" name="password" required>
+        <input type="password" name="y" required>
 
         <button class="btn-login" type="submit">Login</button>
         <button class="btn-cancel" type="reset">Batal</button>
